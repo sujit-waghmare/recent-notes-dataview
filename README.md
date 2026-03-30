@@ -101,7 +101,17 @@ Navigate to **Settings → Recent Notes for Dataview**
 
 ## 🖼 Screenshots
 
-> *(Add your screenshots here after uploading them to the repo)*
+### Dataview Table
+
+![Dataview Table](https://github.com/bigelephant67/recent-notes-dataview/blob/d5f277fa23a07f994364dc1cf5bc4173f8bed6fe/assets/screenshots/recent-notes-preview.png.png)
+
+
+
+### Settings Page
+
+![Settings Page](https://github.com/bigelephant67/recent-notes-dataview/blob/d5f277fa23a07f994364dc1cf5bc4173f8bed6fe/assets/screenshots/recent-notes-settings.png.jpg)
+
+
 
 ---
 

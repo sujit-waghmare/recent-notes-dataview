@@ -1,0 +1,41 @@
+{
+  "name": "recent-notes-dataview",
+  "version": "1.1.0",
+  "description": "Tracks recently opened notes and exposes them to Dataview queries.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "version": "node version-bump.mjs && git add manifest.json versions.json"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "dataview",
+    "recent-notes",
+    "productivity"
+  ],
+  "author": {
+    "name": "Fat Elephant aka Waghmare",
+    "url": "https://github.com/bigelephant67"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigelephant67/recent-notes-dataview.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bigelephant67/recent-notes-dataview/issues"
+  },
+  "homepage": "https://github.com/bigelephant67/recent-notes-dataview#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
+    "builtin-modules": "3.3.0",
+    "esbuild": "0.17.3",
+    "obsidian": "latest",
+    "tslib": "2.4.0",
+    "typescript": "4.7.4"
+  }
+}

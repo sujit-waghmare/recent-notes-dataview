@@ -1,11 +1,10 @@
 {
   "id": "recent-notes-dataview",
   "name": "Recent Notes for Dataview",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "minAppVersion": "0.15.0",
-  "description": "Tracks your recently opened notes and displays them in Dataview queries. Supports configurable count (5–10) and folder exclusions.",
-  "author": "Fat Elephant aka Waghmare",
-  "authorUrl": "https://github.com/bigelephant67",
-  "fundingUrl": "",
+  "description": "Tracks recently opened notes and exposes them to Dataview queries. Configure how many recent notes to show in Settings.",
+  "author": "Fat Elephant",
+  "authorUrl": "github.com/bigelephant67",
   "isDesktopOnly": false
 }

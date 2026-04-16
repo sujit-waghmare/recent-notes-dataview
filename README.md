@@ -2,27 +2,30 @@
 
 > An [Obsidian](https://obsidian.md) plugin that tracks your recently opened notes and lets you display them anywhere using [Dataview](https://github.com/blacksmithgu/obsidian-dataview) queries.
 
-![Obsidian Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=7c3aed&label=downloads&query=downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)
-![Version](https://img.shields.io/github/v/release/bigelephant67/recent-notes-dataview)
-![License](https://img.shields.io/github/license/bigelephant67/recent-notes-dataview)
+![GitHub release](https://img.shields.io/github/v/release/bigelephant67/recent-notes-dataview?color=blue&style=flat-square)
+![Obsidian](https://img.shields.io/badge/Obsidian-v0.15.0+-purple?style=flat-square)
+![License](https://img.shields.io/github/license/bigelephant67/recent-notes-dataview?style=flat-square)
+![Mobile](https://img.shields.io/badge/Mobile-Supported-green?style=flat-square)
 
 ---
 
 ## ✨ Features
 
 - 📋 **Tracks recently opened notes** automatically in the background
-- 🔢 **Configurable count** — choose to show 5, 6, 7, 8, 9, or 10 recent notes
+- 🔢 **Configurable count** — choose to show 5 to 10 recent notes via slider
 - 🚫 **Folder exclusions** — block entire folders (and their subfolders) from being tracked
+- 🔤 **Title exclusions** — hide notes by filename using contains or exact match rules
+- 📂 **Folder path filter in queries** — scope any Dataview table to a specific folder
 - ⚡ **DataviewJS integration** — expose your recent notes to any Dataview query
 - 💾 **Persistent** — recent notes survive Obsidian restarts
-- 📱 **Mobile compatible** — works on Obsidian mobile too
+- 📱 **Mobile compatible** — works on Obsidian iOS and Android
 
 ---
 
 ## 📋 Requirements
 
 - [Obsidian](https://obsidian.md) v0.15.0 or higher
-- [Dataview](https://github.com/blacksmithgu/obsidian-dataview) community plugin (for query display)
+- [Dataview](https://github.com/blacksmithgu/obsidian-dataview) community plugin
 
 ---
 
@@ -46,16 +49,11 @@
 
 ## 🧩 Usage
 
-### Step 1 — Let the plugin track notes
+### Basic — show all recent notes
 
-Just open notes normally. Every `.md` file you open is silently added to your recent list (unless it's inside an excluded folder).
-
-### Step 2 — Paste the DataviewJS snippet
-
-In any note (e.g. your Dashboard), create a `dataviewjs` block:
+In any note, create a `dataviewjs` code block:
 
 ~~~dataviewjs
-// ── Recent Notes (powered by Recent Notes for Dataview) ──
 const rn = app.plugins.plugins["recent-notes-dataview"];
 if (!rn) { dv.paragraph('⚠ Plugin not enabled.'); }
 else {
@@ -74,9 +72,28 @@ else {
 }
 ~~~
 
-This renders a live table with clickable note links, last-modified timestamps, and folder paths.
+### Folder-filtered — show recent notes from a specific folder
 
-> 💡 You can also copy this snippet directly from the plugin's Settings page.
+~~~dataviewjs
+const rn = app.plugins.plugins["recent-notes-dataview"];
+if (!rn) { dv.paragraph('⚠ Plugin not enabled.'); }
+else {
+  // Change "Templates" to any folder path you want
+  const files = rn.getRecentFiles({ fromFolder: "Templates" });
+  if (files.length === 0) {
+    dv.paragraph("No recent notes in this folder.");
+  } else {
+    dv.table(["Note", "Modified"],
+      files.map(f => [
+        dv.fileLink(f.path),
+        new Date(f.stat.mtime).toLocaleString()
+      ])
+    );
+  }
+}
+~~~
+
+> 💡 Both snippets are available with one-click **Copy** buttons in the plugin Settings page.
 
 ---
 
@@ -84,34 +101,42 @@ This renders a live table with clickable note links, last-modified timestamps, a
 
 Navigate to **Settings → Recent Notes for Dataview**
 
-| Setting | Description | Default |
-|---|---|---|
-| Number of recent notes | How many notes to show (slider 5–10) | 5 |
-| Excluded Folders | Folders whose notes are never tracked | *(none)* |
+### 🔢 Number of Recent Notes
 
-### Excluded Folders
+Slider from **5 to 10**. Controls how many notes appear in Dataview queries. Default: 5.
+
+---
+
+### 🚫 Excluded Folders
+
+Block entire folders from being tracked.
 
 - Type a path like `Private` or `Work/Drafts` and click **＋ Add Folder**
-- Folder input **autocompletes** from your vault
-- Subfolders are excluded automatically — adding `Private` blocks `Private/Journal/`, `Private/Archive/`, etc.
-- Notes already tracked inside a newly excluded folder **disappear immediately** from Dataview output — no restart required
+- Input **autocompletes** from your vault folders
+- Exclusions are **recursive** — `Private` also blocks `Private/Journal/`, `Private/Archive/`, etc.
+- Notes already tracked inside a newly excluded folder disappear immediately — no restart needed
 - Paths are case-sensitive on Mac/Linux
+
+---
+
+### 🔤 Excluded Titles *(New in v1.2.0)*
+
+Hide notes by filename using text rules. Two modes:
+
+| Mode | Behaviour | Example |
+|---|---|---|
+| **Contains** (default) | Hides notes whose filename *contains* the text | `Untitled` hides `Untitled 1`, `Untitled 23`, `My Untitled Draft` |
+| **Exact Match** | Hides notes whose filename *exactly equals* the text | `Meeting` only hides `Meeting.md`, not `Team Meeting.md` |
+
+Each saved filter shows a badge: `🔤 Untitled [contains]` or `🔤 Meeting [exact]`
+
+Matching is always **case-insensitive**. The `.md` extension is stripped automatically.
 
 ---
 
 ## 🖼 Screenshots
 
-### Dataview Table
-
-![Dataview Table](https://github.com/bigelephant67/recent-notes-dataview/blob/d5f277fa23a07f994364dc1cf5bc4173f8bed6fe/assets/screenshots/recent-notes-preview.png.png)
-
-
-
-### Settings Page
-
-![Settings Page](https://github.com/bigelephant67/recent-notes-dataview/blob/d5f277fa23a07f994364dc1cf5bc4173f8bed6fe/assets/screenshots/recent-notes-settings.png.jpg)
-
-
+> ![v1.2.0 update](https://github.com/bigelephant67/recent-notes-dataview/blob/4dfa316abb6354d5dc85e03bcf1bbaea669474ae/assets/screenshots/recent-note-dataview-settings.jpg)
 
 ---
 
@@ -132,13 +157,17 @@ npm run dev
 npm run build
 ```
 
-Copy `main.js` and `manifest.json` into your vault's plugin folder to test.
+### Common build fixes
+
+| Error | Fix |
+|---|---|
+| `Cannot find module 'obsidian'` | Run `npm install` first |
+| `moduleResolution 'bundler' invalid` | Change to `"moduleResolution": "node"` in `tsconfig.json` |
+| `Property 'settings' has no initializer` | Change to `settings!: RecentNotesSettings` in `main.ts` |
 
 ---
 
 ## 🤝 Contributing
-
-Pull requests and issues are welcome!
 
 - 🐛 **Bug reports** → [Open an issue](https://github.com/bigelephant67/recent-notes-dataview/issues)
 - 💡 **Feature requests** → [Start a discussion](https://github.com/bigelephant67/recent-notes-dataview/discussions)

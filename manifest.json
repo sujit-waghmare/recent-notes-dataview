@@ -4,7 +4,7 @@
   "version": "1.2.0",
   "minAppVersion": "0.15.0",
   "description": "Tracks recently opened notes and exposes them to Dataview queries. Configure how many recent notes to show in Settings.",
-  "author": "Fat Elephant",
-  "authorUrl": "github.com/bigelephant67",
+  "author": "Waghmare",
+  "authorUrl": "github.com/sujit-waghmare",
   "isDesktopOnly": false
 }

@@ -177,7 +177,7 @@ npm run build
 
 ## 📄 License
 
-MIT © [Fat Elephant aka Waghmare](https://github.com/sujit-waghmare)
+MIT © [Waghmare](https://github.com/sujit-waghmare)
 
 ---
 
